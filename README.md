@@ -24,4 +24,5 @@
 - JavaScript
 - Nodejs
 - Express
+- MongoDB(database)
 - EJS(Embedded JavaScript)
