@@ -6,12 +6,13 @@ const ejs = require("ejs");
 const _ = require("lodash");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
-const constant = require('./constant')
+const constant = require('./constants/constant')
 
-const blogRoute = require('./routes/blogRoute')
+const blogRoute = require('./routes/blogRoute');
+const errorHandler = require("./middlewares/errorHandlerMiddleware");
 
 const app = express();
-
+app.use(express.json())
 mongoose.connect(process.env.DB_CONNECTION_STRING)
 
 
@@ -21,7 +22,9 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+
 app.use('/api/blogs', blogRoute)
+app.use(errorHandler)
 
 app.get("/", function (req, res) {
   Blog.find({}, function (err, result) {
