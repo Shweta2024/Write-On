@@ -6,10 +6,9 @@ const ejs = require("ejs");
 const _ = require("lodash");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
+const constant = require('./constant')
 
-const homeStartingContent = "Discover the power of words and the magic of storytelling with Write On!";
-const aboutContent = "Where creativity and connection meet. Welcome to Write On!";
-const contactContent = "Connect with us and let's make something great together.";
+const blogRoute = require('./routes/blogRoute')
 
 const app = express();
 
@@ -36,19 +35,21 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+app.use('/api/blogs', blogRoute)
+
 app.get("/", function (req, res) {
   Blog.find({}, function (err, result) {
     if (!err)
-      res.render("home", { para: homeStartingContent, posts: result });
+      res.render("home", { para: constant.homeStartingContent, posts: result });
   });
 });
 
 app.get("/about", function (req, res) {
-  res.render("about", { para: aboutContent });
+  res.render("about", { para: constant.aboutContent });
 });
 
 app.get("/contact", function (req, res) {
-  res.render("contact", { para: contactContent });
+  res.render("contact", { para: constant.contactContent });
 });
 
 app.get("/compose", function (req, res) {
