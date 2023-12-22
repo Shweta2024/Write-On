@@ -12,23 +12,9 @@ const blogRoute = require('./routes/blogRoute')
 
 const app = express();
 
-//connect mongoose, create schema & collection
-mongoose.set("strictQuery", true);
-mongoose.connect("mongodb+srv://admin-shweta:"+process.env.PASSWORD+"@cluster0.vtowurn.mongodb.net/BlogDB");
+mongoose.connect(process.env.DB_CONNECTION_STRING)
 
-const blogSchema = mongoose.Schema({
-  postTitle: String,
-  postBody: String
-});
 
-const messageSchema = mongoose.Schema({
-  name: String,
-  email: String,
-  message: String
-});
-
-const Blog = mongoose.model("blog", blogSchema);
-const Message = mongoose.model("message", messageSchema);
 
 app.set("view engine", "ejs");
 
