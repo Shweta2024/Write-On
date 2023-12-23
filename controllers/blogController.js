@@ -15,8 +15,27 @@ const getAllBlogs = async (req, res, next) => {
     }
 }
 
-const getBlog = (req, res, next) => {
-    console.log(`get a blog with id: ${req.params.id}`)
+const getBlog = async (req, res, next) => {
+    try {
+        const blogID = req.params.id
+        console.log(blogID)
+        if (!objectId.isValid(blogID)) {
+            console.log('got invalid id')
+            res.status(400)
+            throw new Error(`${blogID} is an invalid blog Id`)
+        }
+
+        const blog = await Blog.findOne({_id: blogID})
+
+        if (!blog) {
+            res.status(404)
+            throw new Error(`No blog found with id ${blogID}`)
+        }
+
+        res.status(200).json(blog)
+    } catch (err) {
+        next(err)
+    }
 }
 
 
@@ -49,7 +68,6 @@ const createBlog = async (req, res, next) => {
 // @route /api/blogs/:id
 // @access public
 const updateBlog = async (req, res, next) => {
-    console.log('updateBlog')
     try {
         const blogID = req.params.id
         console.log(blogID)
