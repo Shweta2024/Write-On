@@ -8,7 +8,9 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
 const constant = require('./constants/constant')
 
-const blogRoute = require('./routes/blogRoute');
+const blogRoute = require('./routes/blogRoute')
+const userRoute = require('./routes/userRoute')
+
 const errorHandler = require("./middlewares/errorHandlerMiddleware");
 
 const app = express();
@@ -24,6 +26,7 @@ app.use(express.static("public"));
 
 
 app.use('/api/blogs', blogRoute)
+app.use('/api/users', userRoute)
 app.use(errorHandler)
 
 app.get("/", function (req, res) {
