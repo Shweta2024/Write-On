@@ -9,6 +9,10 @@ const userExists = async (email) => {
     return user
 }
 
+
+// @desc Login user
+// @route /api/users/login
+// @access public
 const loginUser = async (req, res, next) => {
     try {
         const { email, password } = req.body
@@ -37,6 +41,10 @@ const loginUser = async (req, res, next) => {
     }
 }
 
+
+// @desc Register a user
+// @route /api/users/register
+// @access public
 const registerUser = async (req, res, next) => {
     try {
         const { name, email, password } = req.body
@@ -64,6 +72,7 @@ const registerUser = async (req, res, next) => {
         next(err)
     }
 }
+
 
 module.exports = {
     loginUser,
