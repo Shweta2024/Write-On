@@ -81,6 +81,7 @@ const updateBlog = async (req, res, next) => {
             throw new Error(`${blogID} is an invalid blog Id`)
         }
 
+        console.log(req.body)
         const updatedBlog = await Blog.findOneAndUpdate(
             {_id: blogID},
             req.body,
@@ -92,7 +93,7 @@ const updateBlog = async (req, res, next) => {
             throw new Error(`No blog found with id ${blogID}`)
         }
 
-        res.status(200).json(updatedBlog)
+        res.status(200).send({'message': 'Blog updated successfully'})
     } catch (err) {
         next(err)
     }

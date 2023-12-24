@@ -1,11 +1,23 @@
-<h1><%=blog.blogTitle%></h1>
-<p></p><%=blog.blogBody%></p>
+<div id="displayMode">
+    <h1><%=blog.blogTitle%></h1>
+    <p></p><%=blog.blogBody%></p>
 
-<button id="deleteButton" name="deleteButton" value=<%=blog._id%>>
-    Delete
-</button>
+    <button id="deleteButton" name="deleteButton" value=<%=blog._id%>>  Delete  </button>
+    <button id="editButton" name="editButton" value=<%=blog._id%>>  Edit    </button>
+</div>
+
+<div id="editMode" style="display: none;">
+    <input id="editedTitle" value="<%=blog.blogTitle%>" >
+    <textarea id="editedBody"><%=blog.blogBody%></textarea>
+
+    <button id="saveButton">Save</button>
+    <button id="cancelButton">Cancel</button>
+</div>
 
 <script>
+
+
+    //  handle DELETE click event
     const deleteButton = document.getElementById("deleteButton")
     deleteButton.addEventListener('click', async () => {
         try{
@@ -25,4 +37,59 @@
             console.log(err)
         }
     })
+
+
+    const displayMode = document.getElementById("displayMode")
+    const editButton = document.getElementById("editButton")
+    const editMode = document.getElementById("editMode")
+    const saveButton = document.getElementById("saveButton")
+    const cancelButton = document.getElementById("cancelButton")
+
+    // handle EDIT click event
+    editButton.addEventListener('click', () => {
+        displayMode.style.display = 'none'
+        editMode.style.display = 'block'
+    })
+
+
+    // handle CANCEL click event
+    cancelButton.addEventListener('click', () => {
+        displayMode.style.display = 'block'
+        editMode.style.display = 'none'
+    })
+
+
+    // handle SAVE click event
+    saveButton.addEventListener('click', async () => {
+        try{
+            const blogID = document.getElementById("editButton").getAttribute('value')
+            console.log('blogid edit : '+blogID)
+            const editedTitle = document.getElementById("editedTitle").value
+            const editedBody = document.getElementById("editedBody").value
+            const updatedBlog = {
+                blogTitle: editedTitle,
+                blogBody: editedBody
+            }
+            console.log(updatedBlog)
+
+            const response = await fetch(`/api/blogs/${blogID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify(updatedBlog)
+            })
+
+            if(response.ok){
+                window.location.href = `/api/blogs/${blogID}`
+            }
+            else{
+                throw new Error('Failed to update the blog')
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+    })
+
 </script>
