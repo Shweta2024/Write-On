@@ -61,7 +61,7 @@ const createBlog = async (req, res, next) => {
         })
         await blog.save()
 
-        res.status(200).json(blog)
+        res.status(200).redirect('/api/blogs')
     } catch (err) {
         next(err)
     }
