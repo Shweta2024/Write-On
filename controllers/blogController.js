@@ -36,7 +36,7 @@ const getBlog = async (req, res, next) => {
             throw new Error(`No blog found with id ${blogID}`)
         }
 
-        res.status(200).json(blog)
+        res.status(200).render('blog', {blog: blog})
     } catch (err) {
         next(err)
     }
