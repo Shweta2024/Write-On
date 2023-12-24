@@ -1,0 +1,101 @@
+<%- include("partials/header") -%>
+
+<div id="displayMode">
+    <h1><%=blog.blogTitle%></h1>
+    <p></p><%=blog.blogBody%></p>
+
+    <button id="deleteButton" class="btn btn-primary" name="deleteButton" value=<%=blog._id%>>  Delete  </button>
+    <button id="editButton" class="btn btn-primary" name="editButton" value=<%=blog._id%>>  Edit    </button>
+</div>
+
+<div id="editMode" style="display: none;" class="form-group">
+    <input id="editedTitle" class="form-control" value="<%=blog.blogTitle%>" >
+    <br>
+    <textarea id="editedBody" class="form-control" rows="20" cols="30"><%=blog.blogBody%></textarea>
+
+    <button id="saveButton" class="btn btn-primary">Save</button>
+    <button id="cancelButton" class="btn btn-primary">Cancel</button>
+</div>
+
+<%- include("partials/footer") -%>
+
+
+<script>
+
+
+    //  handle DELETE click event
+    const deleteButton = document.getElementById("deleteButton")
+    deleteButton.addEventListener('click', async () => {
+        try{
+            const blogID = deleteButton.getAttribute('value')
+            console.log('blogID: ' + blogID)
+            const response = await fetch(`/api/blogs/${blogID}`, {
+                method: 'DELETE'
+            })
+            console.log(response.ok)
+            if (response.ok) {
+                window.location.href = '/api/blogs'
+            }
+            else {
+                throw new Error('Failed to delete the blog')
+            }
+        } catch(err){
+            console.log(err)
+        }
+    })
+
+
+    const displayMode = document.getElementById("displayMode")
+    const editButton = document.getElementById("editButton")
+    const editMode = document.getElementById("editMode")
+    const saveButton = document.getElementById("saveButton")
+    const cancelButton = document.getElementById("cancelButton")
+
+    // handle EDIT click event
+    editButton.addEventListener('click', () => {
+        displayMode.style.display = 'none'
+        editMode.style.display = 'block'
+    })
+
+
+    // handle CANCEL click event
+    cancelButton.addEventListener('click', () => {
+        displayMode.style.display = 'block'
+        editMode.style.display = 'none'
+    })
+
+
+    // handle SAVE click event
+    saveButton.addEventListener('click', async () => {
+        try{
+            const blogID = document.getElementById("editButton").getAttribute('value')
+            console.log('blogid edit : '+blogID)
+            const editedTitle = document.getElementById("editedTitle").value
+            const editedBody = document.getElementById("editedBody").value
+            const updatedBlog = {
+                blogTitle: editedTitle,
+                blogBody: editedBody
+            }
+            console.log(updatedBlog)
+
+            const response = await fetch(`/api/blogs/${blogID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify(updatedBlog)
+            })
+
+            if(response.ok){
+                window.location.href = `/api/blogs/${blogID}`
+            }
+            else{
+                throw new Error('Failed to update the blog')
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+</script>
