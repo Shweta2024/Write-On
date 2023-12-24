@@ -4,6 +4,6 @@
     <h1><%=blog.blogTitle%></h1>
     <p>
         <%=blog.blogBody.split(' ').slice(0,50).join(' ')%>
-        ...<a href= <%=blog._id%> >Read more</a>
+        ...<a href= "/api/blogs/<%=blog._id%>" >Read more</a>
     </p>
 <%})%>

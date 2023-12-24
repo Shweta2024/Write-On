@@ -117,8 +117,7 @@ const deleteBlog = async (req, res, next) => {
             res.status(404)
             throw new Error(`No blog found with id ${blogID}`)
         }
-
-        res.status(200).json(`blog with id ${blogID} deleted successfully!`)
+        res.status(200).send({'message': 'Blog deleted successfully'})
     } catch (err) {
         next(err)
     }

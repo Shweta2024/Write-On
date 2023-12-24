@@ -1,2 +1,28 @@
 <h1><%=blog.blogTitle%></h1>
 <p></p><%=blog.blogBody%></p>
+
+<button id="deleteButton" name="deleteButton" value=<%=blog._id%>>
+    Delete
+</button>
+
+<script>
+    const deleteButton = document.getElementById("deleteButton")
+    deleteButton.addEventListener('click', async () => {
+        try{
+            const blogID = deleteButton.getAttribute('value')
+            console.log('blogID: ' + blogID)
+            const response = await fetch(`/api/blogs/${blogID}`, {
+                method: 'DELETE'
+            })
+            console.log(response.ok)
+            if (response.ok) {
+                window.location.href = '/api/blogs'
+            }
+            else {
+                throw new Error('Failed to delete the blog')
+            }
+        } catch(err){
+            console.log(err)
+        }
+    })
+</script>
