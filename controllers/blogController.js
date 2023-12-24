@@ -9,12 +9,16 @@ const objectId = mongoose.Types.ObjectId
 const getAllBlogs = async (req, res, next) => {
     try {
         const blogs = await Blog.find()
-        res.status(200).json(blogs)
+        res.status(200).render('allBlogs', { blogs: blogs })
     } catch (err) {
         next(err)
     }
 }
 
+
+// @desc Get a Blog
+// @route /api/blogs/:id
+// @access public
 const getBlog = async (req, res, next) => {
     try {
         const blogID = req.params.id
@@ -119,6 +123,7 @@ const deleteBlog = async (req, res, next) => {
         next(err)
     }
 }
+
 
 module.exports = {
     getAllBlogs,
