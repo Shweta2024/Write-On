@@ -1,12 +1,18 @@
-<h1>Explore blogs!</h1>
+<%- include("partials/header") -%>
+
 
 
 <div id="allBlogsMode">
 
-    <button id="writeButton">Write</button>
+    <p>Create a blog</p>
+    <button id="writeButton" class="btn btn-primary">Write</button>
+
+    <h1>Explore blogs!</h1>
+
+    <br>
 
     <% blogs.forEach( (blog)=> { %>
-    <h1><%=blog.blogTitle%></h1>
+    <h3><%=blog.blogTitle%></h3>
     <p>
         <%=blog.blogBody.split(' ').slice(0,50).join(' ')%>
         ...<a href="/api/blogs/<%=blog._id%>">Read more</a>
@@ -27,6 +33,7 @@
     </form>
     <button id="cancelButton" type="submit" class="btn btn-primary">Cancel</button>
 </div>
+<%- include("partials/footer") -%>
 
 <script>
     

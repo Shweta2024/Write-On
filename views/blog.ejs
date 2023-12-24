@@ -1,18 +1,24 @@
+<%- include("partials/header") -%>
+
 <div id="displayMode">
     <h1><%=blog.blogTitle%></h1>
     <p></p><%=blog.blogBody%></p>
 
-    <button id="deleteButton" name="deleteButton" value=<%=blog._id%>>  Delete  </button>
-    <button id="editButton" name="editButton" value=<%=blog._id%>>  Edit    </button>
+    <button id="deleteButton" class="btn btn-primary" name="deleteButton" value=<%=blog._id%>>  Delete  </button>
+    <button id="editButton" class="btn btn-primary" name="editButton" value=<%=blog._id%>>  Edit    </button>
 </div>
 
-<div id="editMode" style="display: none;">
-    <input id="editedTitle" value="<%=blog.blogTitle%>" >
-    <textarea id="editedBody"><%=blog.blogBody%></textarea>
+<div id="editMode" style="display: none;" class="form-group">
+    <input id="editedTitle" class="form-control" value="<%=blog.blogTitle%>" >
+    <br>
+    <textarea id="editedBody" class="form-control" rows="20" cols="30"><%=blog.blogBody%></textarea>
 
-    <button id="saveButton">Save</button>
-    <button id="cancelButton">Cancel</button>
+    <button id="saveButton" class="btn btn-primary">Save</button>
+    <button id="cancelButton" class="btn btn-primary">Cancel</button>
 </div>
+
+<%- include("partials/footer") -%>
+
 
 <script>
 
