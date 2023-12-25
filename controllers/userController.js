@@ -10,6 +10,11 @@ const userExists = async (email) => {
 }
 
 
+const getLoginUserForm = (req, res) => {
+    res.status(200).render('login')
+}
+
+
 // @desc Login user
 // @route /api/users/login
 // @access public
@@ -35,10 +40,15 @@ const loginUser = async (req, res, next) => {
             throw new Error('Password is incorrect!')
         }
 
-        res.status(200).json(user.name)
+        res.status(200).redirect('/api/blogs')
     } catch (err) {
         next(err)
     }
+}
+
+
+const getRegisterUserForm = (req, res) => {
+    res.status(200).render('register')
 }
 
 
@@ -47,6 +57,7 @@ const loginUser = async (req, res, next) => {
 // @access public
 const registerUser = async (req, res, next) => {
     try {
+        console.log(req.body)
         const { name, email, password } = req.body
         if (!name || !email || !password) {
             res.status(400)
@@ -67,7 +78,8 @@ const registerUser = async (req, res, next) => {
         })
         await user.save()
 
-        res.status(200).json({name, email})
+        console.log(user)
+        res.status(200).redirect('/api/users/login')
     } catch (err) {
         next(err)
     }
@@ -75,6 +87,8 @@ const registerUser = async (req, res, next) => {
 
 
 module.exports = {
+    getLoginUserForm,
     loginUser,
+    getRegisterUserForm,
     registerUser
 }
