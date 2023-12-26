@@ -1,5 +1,6 @@
 <%- include("partials/header") -%>
 
+
 <div id="displayMode">
     <h1><%=blog.blogTitle%></h1>
     <p></p><%=blog.blogBody%></p>
@@ -53,6 +54,7 @@
     const saveButton = document.getElementById("saveButton")
     const cancelButton = document.getElementById("cancelButton")
 
+    
     // handle EDIT click event
     editButton.addEventListener('click', () => {
         displayMode.style.display = 'none'
@@ -99,5 +101,6 @@
             console.log(err)
         }
     })
+
 
 </script>

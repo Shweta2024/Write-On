@@ -1,5 +1,6 @@
 const constantStatus = require('../constants/constantStatus')
 
+
 const errorHandler = (err, req, res, next) => {
     const statusCode = res.statusCode || 500
     console.log(statusCode)
@@ -46,5 +47,6 @@ const errorHandler = (err, req, res, next) => {
             break;
     }
 }
+
 
 module.exports = errorHandler

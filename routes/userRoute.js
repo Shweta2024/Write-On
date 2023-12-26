@@ -4,8 +4,11 @@ const {
     loginUser,
     getRegisterUserForm,
     registerUser,
-    logOutUser
+    logOutUser,
+    getContactUsForm,
+    contactUs
 } = require('../controllers/userController')
+const validateUserMiddleware = require('../middlewares/validateUserMiddleware')
 
 
 router.get('/login', getLoginUserForm)
@@ -17,6 +20,10 @@ router.get('/register', getRegisterUserForm)
 router.post('/register', registerUser)
 
 router.get('/logout', logOutUser)
+
+router.get('/contact', validateUserMiddleware, getContactUsForm)
+
+router.post('/contact', validateUserMiddleware, contactUs)
 
 
 module.exports = router
