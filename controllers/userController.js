@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 
 // function to check if user exists
@@ -7,6 +8,11 @@ const userExists = async (email) => {
     const user = await User.findOne({ email: email })
     console.log(user)
     return user
+}
+
+
+const getLoginUserForm = (req, res) => {
+    res.status(200).render('login')
 }
 
 
@@ -35,10 +41,29 @@ const loginUser = async (req, res, next) => {
             throw new Error('Password is incorrect!')
         }
 
-        res.status(200).json(user.name)
+        const accessToken = jwt.sign({
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        }, process.env.JWT_SECRET,
+            {
+                expiresIn:"7d"
+        })
+        
+        res.cookie('auth-token', accessToken)
+        console.log(accessToken)
+        // res.status(200).json(accessToken)
+        res.status(200).redirect('/api/blogs')
     } catch (err) {
         next(err)
     }
+}
+
+
+const getRegisterUserForm = (req, res) => {
+    res.status(200).render('register')
 }
 
 
@@ -47,6 +72,7 @@ const loginUser = async (req, res, next) => {
 // @access public
 const registerUser = async (req, res, next) => {
     try {
+        console.log(req.body)
         const { name, email, password } = req.body
         if (!name || !email || !password) {
             res.status(400)
@@ -67,14 +93,23 @@ const registerUser = async (req, res, next) => {
         })
         await user.save()
 
-        res.status(200).json({name, email})
+        console.log(user)
+        res.status(200).redirect('/api/users/login')
     } catch (err) {
         next(err)
     }
 }
 
 
+const logOutUser = (req, res, next) => {
+    res.clearCookie('auth-token')
+    res.redirect('/api/users/login')
+}
+
 module.exports = {
+    getLoginUserForm,
     loginUser,
-    registerUser
+    getRegisterUserForm,
+    registerUser,
+    logOutUser
 }

@@ -1,0 +1,19 @@
+<%-  include("partials/header")   -%>
+
+<h1>LOGIN</h1>
+
+<div>
+    <form method="post" action="/api/users/login">
+        <div class="form-group">
+            <label id="email" for="email">Email</label>
+            <input class="form-control" name="email" required=true>
+            <label id="Password" for="password">Password</label>
+            <input class="form-control" name="password" required=true>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <br>
+    <a href="/api/users/register">Create a new Account</a>
+</div>
+
+<%-  include("partials/footer")   -%>
