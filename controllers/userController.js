@@ -42,7 +42,7 @@ const loginUser = async (req, res, next) => {
         }
 
         const accessToken = jwt.sign({
-            user: {
+            payload: {
                 _id: user._id,
                 name: user.name,
                 email: user.email
@@ -55,7 +55,7 @@ const loginUser = async (req, res, next) => {
         res.cookie('auth-token', accessToken)
         console.log(accessToken)
         // res.status(200).json(accessToken)
-        res.status(200).redirect('/api/blogs')
+        res.status(200).redirect('/api/blogs/allBlogs')
     } catch (err) {
         next(err)
     }

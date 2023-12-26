@@ -2,9 +2,11 @@ const router = require('express').Router()
 const {
     getAllBlogs,
     getBlog,
+    getCreateBlogForm,
     createBlog,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    getMyBlogs
 } = require('../controllers/blogController')
 const validateUserMiddleware = require('../middlewares/validateUserMiddleware')
 
@@ -12,15 +14,19 @@ const validateUserMiddleware = require('../middlewares/validateUserMiddleware')
 //  allow only authorized users to access the routes
 router.use(validateUserMiddleware)
 
-router.get('/', getAllBlogs)
+router.get('/allBlogs', getAllBlogs)
 
-router.get('/:id', getBlog)
+router.get('/read/:id', getBlog)
 
-router.post('/', createBlog)
+router.get('/create', getCreateBlogForm)
 
-router.put('/:id', updateBlog)
+router.post('/create', createBlog)
 
-router.delete('/:id', deleteBlog)
+router.put('/read/:id', updateBlog)
+
+router.delete('/delete/:id', deleteBlog)
+
+router.get('/myBlogs', getMyBlogs)
 
 
 module.exports = router

@@ -6,7 +6,6 @@ const validateUserMiddleware = (req, res, next) => {
     console.log('validating token')
     const accessToken = req.cookies['auth-token']
     console.log('access token: ', accessToken)
-    console.log(req.user)
     
     try {
         if (!accessToken) {
@@ -15,7 +14,7 @@ const validateUserMiddleware = (req, res, next) => {
         }
         const verifiedUser = jwt.verify(accessToken, process.env.JWT_SECRET)
         req.user = verifiedUser
-        console.log(verifiedUser.user)
+        console.log(verifiedUser.payload)
         next()
     } catch (err) {
         res.status(400)

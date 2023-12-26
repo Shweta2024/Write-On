@@ -1,3 +1,19 @@
-</div>
-</body>
+        </div>
+    </body>
 </html>
+
+
+<script>
+
+
+        const path = window.location.pathname;
+        const navItems = document.querySelectorAll('.nav.navbar-nav.navbar-right li');
+        navItems.forEach((item) => {
+            const link = item.querySelector('a').getAttribute('href');
+            if (path === link) {
+                item.classList.add('active');
+            }
+        });
+
+
+</script>
