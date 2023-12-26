@@ -43,6 +43,11 @@ const getBlog = async (req, res, next) => {
 }
 
 
+const getCreateBlogForm = (req, res, next) => {
+    res.status(200).render('createBlog')
+}
+
+
 // @desc Create a Blog
 // @route /api/blogs
 // @access public
@@ -56,12 +61,13 @@ const createBlog = async (req, res, next) => {
         }
 
         const blog = new Blog({
+            userID: req.user._id,
             blogTitle,
             blogBody
         })
         await blog.save()
 
-        res.status(200).redirect('/api/blogs')
+        res.status(200).redirect('/api/blogs/myBlogs')
     } catch (err) {
         next(err)
     }
@@ -125,10 +131,17 @@ const deleteBlog = async (req, res, next) => {
 }
 
 
+const getMyBlogs = async (req, res, next) => {
+    res.status(200).send({"messafe": "my blogsssss"})
+}
+
+
 module.exports = {
     getAllBlogs,
     getBlog,
+    getCreateBlogForm,
     createBlog,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    getMyBlogs
 }

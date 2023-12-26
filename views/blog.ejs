@@ -29,12 +29,12 @@
         try{
             const blogID = deleteButton.getAttribute('value')
             console.log('blogID: ' + blogID)
-            const response = await fetch(`/api/blogs/${blogID}`, {
+            const response = await fetch(`/api/blogs/delete/${blogID}`, {
                 method: 'DELETE'
             })
             console.log(response.ok)
             if (response.ok) {
-                window.location.href = '/api/blogs'
+                window.location.href = '/api/blogs/myBlogs'
             }
             else {
                 throw new Error('Failed to delete the blog')
@@ -78,7 +78,7 @@
             }
             console.log(updatedBlog)
 
-            const response = await fetch(`/api/blogs/${blogID}`, {
+            const response = await fetch(`/api/blogs/read/${blogID}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -87,7 +87,7 @@
             })
 
             if(response.ok){
-                window.location.href = `/api/blogs/${blogID}`
+                window.location.href = `/api/blogs/read/${blogID}`
             }
             else{
                 throw new Error('Failed to update the blog')
