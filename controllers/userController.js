@@ -101,9 +101,15 @@ const registerUser = async (req, res, next) => {
 }
 
 
+const logOutUser = (req, res, next) => {
+    res.clearCookie('auth-token')
+    res.redirect('/api/users/login')
+}
+
 module.exports = {
     getLoginUserForm,
     loginUser,
     getRegisterUserForm,
-    registerUser
+    registerUser,
+    logOutUser
 }
