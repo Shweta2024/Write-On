@@ -17,7 +17,7 @@ const validateUserMiddleware = (req, res, next) => {
         console.log(verifiedUser.payload)
         next()
     } catch (err) {
-        res.status(400)
+        res.status(401)
         err.message = "Invalid access token"
         next(err)
     }

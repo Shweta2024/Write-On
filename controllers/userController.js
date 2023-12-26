@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Message = require('../models/messageModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -11,6 +12,9 @@ const userExists = async (email) => {
 }
 
 
+// @desc Render login form
+// @route /api/users/login
+// @access public
 const getLoginUserForm = (req, res) => {
     res.status(200).render('login')
 }
@@ -62,6 +66,9 @@ const loginUser = async (req, res, next) => {
 }
 
 
+// @desc Render register form
+// @route /api/users/register
+// @access public
 const getRegisterUserForm = (req, res) => {
     res.status(200).render('register')
 }
@@ -101,15 +108,47 @@ const registerUser = async (req, res, next) => {
 }
 
 
+// @desc Logout user
+// @route /api/users/logout
+// @access public
 const logOutUser = (req, res, next) => {
     res.clearCookie('auth-token')
     res.redirect('/api/users/login')
 }
+
+
+// @desc Render contact us form
+// @route /api/users/contact
+// @access private
+const getContactUsForm = (req, res, next) => {
+    res.status(200).render('contact')
+}
+
+
+// @desc Get the message from user
+// @route /api/users/contact
+// @access private
+const contactUs = (req, res, next) => {
+    const { name, email, message } = req.body
+    console.log(req.body)
+    const messageObject = new Message({
+        userID: req.user.payload._id,
+        name,
+        email,
+        message
+    })
+    messageObject.save()
+
+    res.status(200).redirect('/api/blogs/allBlogs')
+}
+
 
 module.exports = {
     getLoginUserForm,
     loginUser,
     getRegisterUserForm,
     registerUser,
-    logOutUser
+    logOutUser,
+    getContactUsForm,
+    contactUs
 }

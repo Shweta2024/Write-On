@@ -4,8 +4,8 @@ const objectId = mongoose.Types.ObjectId
 
 
 // @desc Get All Blogs
-// @route /api/blogs
-// @access public
+// @route /api/blogs/allBlogs
+// @access private
 const getAllBlogs = async (req, res, next) => {
     try {
         const blogs = await Blog.find()
@@ -17,8 +17,8 @@ const getAllBlogs = async (req, res, next) => {
 
 
 // @desc Get a Blog
-// @route /api/blogs/:id
-// @access public
+// @route /api/blogs/read/:id
+// @access private
 const getBlog = async (req, res, next) => {
     try {
         const blogID = req.params.id
@@ -49,14 +49,17 @@ const getBlog = async (req, res, next) => {
 }
 
 
+// @desc Render create blog form
+// @route /api/blogs/create
+// @access private
 const getCreateBlogForm = (req, res, next) => {
     res.status(200).render('createBlog')
 }
 
 
 // @desc Create a Blog
-// @route /api/blogs
-// @access public
+// @route /api/blogs/create
+// @access private
 const createBlog = async (req, res, next) => {
     try {
         const { blogTitle, blogBody } = req.body 
@@ -81,8 +84,8 @@ const createBlog = async (req, res, next) => {
 
 
 // @desc Update a Blog
-// @route /api/blogs/:id
-// @access public
+// @route /api/blogs/read/:id
+// @access private
 const updateBlog = async (req, res, next) => {
     try {
         const blogID = req.params.id
@@ -113,8 +116,8 @@ const updateBlog = async (req, res, next) => {
 
 
 // @desc Delete a Blog
-// @route /api/blogs/:id
-// @access public
+// @route /api/blogs/delete/:id
+// @access private
 const deleteBlog = async (req, res, next) => {
     try {
         const blogID = req.params.id
@@ -137,6 +140,9 @@ const deleteBlog = async (req, res, next) => {
 }
 
 
+// @desc Get blog of currently authorized user
+// @route /api/blogs/myBlogs
+// @access private
 const getMyBlogs = async (req, res, next) => {
     try {
         const myBlogs = await Blog.find({userID: req.user.payload._id}) // req.user._id -> id of the current authorized user

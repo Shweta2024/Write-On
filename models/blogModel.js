@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+
 const blogSchema = mongoose.Schema({
     userID: {
         type: mongoose.Schema.Types.ObjectId,
