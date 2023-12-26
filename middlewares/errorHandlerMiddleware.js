@@ -13,11 +13,12 @@ const errorHandler = (err, req, res, next) => {
             })
             break;
         case constantStatus.UNAUTHORIZED:
-            res.json({
-                title: 'UNAUTHORIZED ',
-                message: err.message,
-                stackTrace: err.stack
-            })
+            // res.json({
+            //     title: 'UNAUTHORIZED ',
+            //     message: err.message,
+            //     stackTrace: err.stack
+            // })
+            res.redirect('/api/users/login')
             break;
         case constantStatus.FORBIDDEN:
             res.json({
