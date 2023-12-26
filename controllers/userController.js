@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 
 // function to check if user exists
@@ -40,6 +41,20 @@ const loginUser = async (req, res, next) => {
             throw new Error('Password is incorrect!')
         }
 
+        const accessToken = jwt.sign({
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        }, process.env.JWT_SECRET,
+            {
+                expiresIn:"7d"
+        })
+        
+        res.cookie('auth-token', accessToken)
+        console.log(accessToken)
+        // res.status(200).json(accessToken)
         res.status(200).redirect('/api/blogs')
     } catch (err) {
         next(err)

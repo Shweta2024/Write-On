@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const constant = require('./constants/constant')
+const cookieParser = require('cookie-parser')
 const blogRoute = require('./routes/blogRoute')
 const userRoute = require('./routes/userRoute')
 const errorHandler = require("./middlewares/errorHandlerMiddleware")
@@ -17,6 +17,7 @@ app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.use(cookieParser())
 
 
 //  connect to db
