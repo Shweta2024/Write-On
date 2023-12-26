@@ -2,20 +2,22 @@
 
 
 <div id="createBlogMode">
-    <form action="/api/blogs" method="post">
+    <form action="/api/blogs/create" method="post">
         <div class="form-group">
             <label for="blogTitle">Title</label>
             <input type="text" class="form-control" id="blogTitle" name="blogTitle"
-                placeholder="Enter title of the blog">
+                placeholder="Enter title of the blog" required="true">
             <label for="blogBody">Post</label>
-            <textarea class="form-control" id="blogBody" name="blogBody" rows="5" cols="30"></textarea>
+            <textarea class="form-control" id="blogBody" name="blogBody" rows="5" cols="30" required="true"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Publish</button>
     </form>
     
     <br>
 
-    <button id="cancelButton" type="submit" class="btn btn-primary" href="/api/blogs/allBlogs">Cancel</button>
+    <form method="get" action="/api/blogs/allBlogs">
+        <button id="cancelButton" type="submit" class="btn btn-primary">Cancel</button>
+    </form>
 </div>
 
 

@@ -4,8 +4,10 @@
     <h1><%=blog.blogTitle%></h1>
     <p></p><%=blog.blogBody%></p>
 
+    <% if (isOwner){ %>
     <button id="deleteButton" class="btn btn-primary" name="deleteButton" value=<%=blog._id%>>  Delete  </button>
     <button id="editButton" class="btn btn-primary" name="editButton" value=<%=blog._id%>>  Edit    </button>
+    <%}%>
 </div>
 
 <div id="editMode" style="display: none;" class="form-group">

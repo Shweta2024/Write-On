@@ -9,7 +9,7 @@ const objectId = mongoose.Types.ObjectId
 const getAllBlogs = async (req, res, next) => {
     try {
         const blogs = await Blog.find()
-        res.status(200).render('allBlogs', { blogs: blogs })
+        res.status(200).render('allBlogs', { message: `Hey ${req.user.payload.name}, explore all blogs!`, blogs: blogs })
     } catch (err) {
         next(err)
     }
@@ -36,7 +36,13 @@ const getBlog = async (req, res, next) => {
             throw new Error(`No blog found with id ${blogID}`)
         }
 
-        res.status(200).render('blog', {blog: blog})
+        let blogOwnerID = blog.userID.toString()
+        let isOwner = false
+        if (blogOwnerID === req.user.payload._id) {
+            isOwner = true
+        }
+
+        res.status(200).render('blog', {isOwner, blog: blog})
     } catch (err) {
         next(err)
     }
@@ -61,7 +67,7 @@ const createBlog = async (req, res, next) => {
         }
 
         const blog = new Blog({
-            userID: req.user._id,
+            userID: req.user.payload._id,
             blogTitle,
             blogBody
         })
@@ -132,7 +138,12 @@ const deleteBlog = async (req, res, next) => {
 
 
 const getMyBlogs = async (req, res, next) => {
-    res.status(200).send({"messafe": "my blogsssss"})
+    try {
+        const myBlogs = await Blog.find({userID: req.user.payload._id}) // req.user._id -> id of the current authorized user
+        res.status(200).render('allBlogs', {message: `Hey ${req.user.payload.name}, explore your blogs!`, blogs: myBlogs })
+    } catch (err) {
+        next(err)
+    }
 }
 
 

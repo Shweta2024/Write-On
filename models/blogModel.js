@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const blogSchema = mongoose.Schema({
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User' // reference of the user model
+    },
     blogTitle: {
         type: String,
         required: [true, 'Please enter a title.']
